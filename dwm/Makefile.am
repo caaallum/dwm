@@ -1,0 +1,4 @@
+bin_PROGRAMS = dwm
+dwm_SOURCES = drw.c dwm.c util.c
+dwm_CFLAGS = -Wall -std=c11 -pedantic -Wno-deprecated-declarations @X11_CFLAGS@ @XINERAMA_CFLAGS@ @FREETYPE_CFLAGS@ @XFT_CFLAGS@ @FONTCONFIG_CFLAGS@
+dwm_LDADD = @X11_LIBS@ @XINERAMA_LIBS@ @FREETYPE_LIBS@ @XFT_LIBS@ @FONTCONFIG_LIBS@
