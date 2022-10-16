@@ -18,7 +18,6 @@
 
 #include "drw.h"
 #include "util.h"
-#include "auto_config.h"
 
 /* macros */
 #define INTERSECT(x,y,w,h,r)  (MAX(0, MIN((x)+(w),(r).x_org+(r).width)  - MAX((x),(r).x_org)) \
@@ -518,9 +517,9 @@ insert:
 	case XK_Tab:
 		if (!sel)
 			return;
-		cursor = strnlen(sel->text, sizeof text - 1);
-		memcpy(text, sel->text, cursor);
-		text[cursor] = '\0';
+		strncpy(text, sel->text, sizeof text - 1);
+		text[sizeof text - 1] = '\0';
+		cursor = strlen(text);
 		match();
 		break;
 	}
@@ -550,18 +549,18 @@ paste(void)
 static void
 readstdin(void)
 {
-	char *line = NULL;
-	size_t i, junk, size = 0;
-	ssize_t len;
+	char buf[sizeof text], *p;
+	size_t i, size = 0;
 
 	/* read each line from stdin and add it to the item list */
-	for (i = 0; (len = getline(&line, &junk, stdin)) != -1; i++, line = NULL) {
+	for (i = 0; fgets(buf, sizeof buf, stdin); i++) {
 		if (i + 1 >= size / sizeof *items)
 			if (!(items = realloc(items, (size += BUFSIZ))))
 				die("cannot realloc %zu bytes:", size);
-		if (line[len - 1] == '\n')
-			line[len - 1] = '\0';
-		items[i].text = line;
+		if ((p = strchr(buf, '\n')))
+			*p = '\0';
+		if (!(items[i].text = strdup(buf)))
+			die("cannot strdup %zu bytes:", strlen(buf) + 1);
 		items[i].out = 0;
 	}
 	if (items)
@@ -611,12 +610,13 @@ static void
 setup(void)
 {
 	int x, y, i, j;
-	unsigned int du;
+	unsigned int du, tmp;
 	XSetWindowAttributes swa;
 	XIM xim;
 	Window w, dw, *dws;
 	XWindowAttributes wa;
 	XClassHint ch = {"dmenu", "dmenu"};
+	struct item *item;
 #ifdef XINERAMA
 	XineramaScreenInfo *info;
 	Window pw;
@@ -659,9 +659,9 @@ setup(void)
 				if (INTERSECT(x, y, 1, 1, info[i]) != 0)
 					break;
 
-		x = info[i].x_org;
-		y = info[i].y_org + (topbar ? 0 : info[i].height - mh);
-		mw = info[i].width;
+		x = info[i].x_org + sidepad;
+		y = info[i].y_org + (topbar ? vertpad : info[i].height - mh - vertpad);
+		mw = info[i].width - 2 * sidepad;
 		XFree(info);
 	} else
 #endif
@@ -674,7 +674,12 @@ setup(void)
 		mw = wa.width;
 	}
 	promptw = (prompt && *prompt) ? TEXTW(prompt) - lrpad / 4 : 0;
-	inputw = mw / 3; /* input width: ~33% of monitor width */
+	for (item = items; item && item->text; ++item) {
+		if ((tmp = textw_clamp(item->text, mw/3)) > inputw) {
+			if ((inputw = tmp) == mw/3)
+				break;
+		}
+	}
 	match();
 
 	/* create menu window */
@@ -711,8 +716,9 @@ setup(void)
 static void
 usage(void)
 {
-	die("usage: dmenu [-bfiv] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
-	    "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]");
+	fputs("usage: dmenu [-bfiv] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
+	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]\n", stderr);
+	exit(1);
 }
 
 int
