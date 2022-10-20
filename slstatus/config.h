@@ -64,9 +64,9 @@ static const char unknown_str[] = "n/a";
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
  */
 static const struct arg args[] = {
-    {temp, "[TEMP %sC] ", "/sys/class/thermal/thermal_zone0/temp"},
-    {cpu_perc, "[CPU %s%] ", NULL},
-    {ram_perc, "[RAM %s%] ", NULL},
-    {battery_perc, "[BAT %s%] ", "BAT0"},
-    {kernel_release, "[%s]", NULL},
-    {datetime, "[%s]", "%F %T"}};
+    {temp, "TEMP %sC |", "/sys/class/thermal/thermal_zone0/temp"},
+    {cpu_perc, "CPU %s% |", NULL},
+    {ram_perc, "RAM %s% |", NULL},
+    {battery_perc, "BAT %s% |", "BAT0"},
+    {kernel_release, "%s |", NULL},
+    {datetime, "%s", "%F %T"}};
