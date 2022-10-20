@@ -1,5 +1,5 @@
 
-DIRS=dwm st dmenu dwmstatus
+DIRS=dwm st dmenu slstatus
 
 all:
 	for dir in $(DIRS); do $(MAKE) -C $$dir ; done
