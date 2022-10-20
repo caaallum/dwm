@@ -3,7 +3,7 @@
 setxkbmap gb
 slstatus &
 picom &
-#xwallpaper --zoom &
+xwallpaper --zoom /usr/local/dwm/background.png &
 while true; do
     dwm > /dev/null 2>&1
 done
