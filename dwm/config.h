@@ -8,8 +8,8 @@ static const int swallowfloating =
     0;                         /* 1 means swallow floating windows by default */
 static const int showbar = 1;  /* 0 means no bar */
 static const int topbar = 1;   /* 0 means bottom bar */
-static const int vertpad = 16; /* vertical padding of bar */
-static const int sidepad = 16; /* horizontal padding of bar */
+static const int vertpad = 10; /* vertical padding of bar */
+static const int sidepad = 10; /* horizontal padding of bar */
 static const char *fonts[] = {"JetBrainsMono Nerd Font, monospace:size=12"};
 static const char dmenufont[] = "JetBrainsMono Nerd Font, monospace:size=12";
 static const unsigned int baralpha = 0xd0;
@@ -17,7 +17,7 @@ static const unsigned int borderalpha = OPAQUE;
 static char normbgcolor[] = "#222222";
 static char normbordercolor[] = "#4a393b";
 static char normfgcolor[] = "#bbbbbb";
-static char selfgcolor[] = "#0000ff";     // #e617b6";
+static char selfgcolor[] = "#4f4746";     // #e617b6";
 static char selbordercolor[] = "#808080"; //"#f542aa";
 static char selbgcolor[] = "#4f4746";
 
@@ -51,8 +51,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = {" terminal", " browser", " music",
-                             "辶video", " useless"};
+static const char *tags[] = {"1", "2", "3", "4", "5"};
 
 static const Rule rules[] = {
     /* xprop(1):
