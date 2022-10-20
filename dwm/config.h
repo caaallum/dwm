@@ -17,8 +17,8 @@ static const unsigned int borderalpha = OPAQUE;
 static char normbgcolor[] = "#222222";
 static char normbordercolor[] = "#4a393b";
 static char normfgcolor[] = "#bbbbbb";
-static char selfgcolor[] = "#e617b6";
-static char selbordercolor[] = "#f542aa";
+static char selfgcolor[] = "#0000ff";     // #e617b6";
+static char selbordercolor[] = "#808080"; //"#f542aa";
 static char selbgcolor[] = "#4f4746";
 
 static const char *upvol[] = {"pactl", "set-sink-volume", "0", "+5%", NULL};
