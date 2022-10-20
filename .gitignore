@@ -1,1 +1,5 @@
 *.o
+dmenu/dmenu
+dmenu/stest
+slstatus/slstatus
+st/st
