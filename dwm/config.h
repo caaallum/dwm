@@ -17,7 +17,7 @@ static const unsigned int borderalpha = OPAQUE;
 static char normbgcolor[] = "#222222";
 static char normbordercolor[] = "#4a393b";
 static char normfgcolor[] = "#bbbbbb";
-static char selfgcolor[] = "#4f4746";     // #e617b6";
+static char selfgcolor[] = "#bbbbbb";     // #e617b6";
 static char selbordercolor[] = "#808080"; //"#f542aa";
 static char selbgcolor[] = "#4f4746";
 
